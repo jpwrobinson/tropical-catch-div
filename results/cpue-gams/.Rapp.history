@@ -1,0 +1,8 @@
+load("/Users/robins64/Documents/git_repos/pirates/results/cpue/cpue-full-remote/gam_grouper.Rdata")
+ls()
+summary(mgam)
+library(gratia)
+draw(mgam)
+appraise(mgam)
+load("/Users/robins64/Documents/git_repos/pirates/results/cpue/cpue-full-remote/gam_grouper.Rdata")
+ls()

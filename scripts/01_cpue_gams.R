@@ -1,20 +1,16 @@
-# library(here) 
-library(dplyr) 
+
 library(funk) 
 library(scales)
-library(tidyr)
+library(tidyverse)
 library(itsadug)
 library(mgcv)
-library(ggplot2)
-library(tidyr)
 library(here)
 library(gratia)
-# library(ggfortify)
 
 setwd(here('tropical-ssf-div/'))
 
-## Data load
-load(file='data/TBD.Rdata')
+## Data load - species level data
+load(file='data/cpue_species_1990-2016.Rdata')
 
 t$log10catch<-scale(log10(t$cpue))
 t$SZ<-factor(t$SZ)
@@ -41,14 +37,7 @@ if(run == TRUE){
 }
 
 #### TOTAL CPUE 
-t<-whaler %>% group_by(SZ, unique.id, DATE.ym, year,  month, dmi, benso, DAYS.FISH) %>% 
-              summarise(catch= sum(biomass.kg)) %>%
-              mutate(catch = catch / DAYS.FISH) %>%
-               droplevels() %>%
-              group_by(SZ, DATE.ym, year,  dmi, benso, month) %>%
-              summarise(cpue = mean(catch)) 
-
-t <- t %>% mutate(id = paste(SZ, DATE.ym, sep = '-'))
+load(file='data/cpue_1990-2016_total.Rdata')
 t$log10catch<-scale(log10(t$cpue))
 t$SZ<-factor(t$SZ)
 
@@ -67,6 +56,11 @@ mgam<-mgcv::gam(cpue ~
               s(month.scaled, bs = 'cc') +
               s(SZ, bs = "re"), 
               data = df, family='Gamma'(link='log'))
+
+pdf(file = paste0('figures/model_output/', 'total', '.pdf'), height= 7, width=12)
+print(draw(mgam))
+print(appraise(mgam))
+dev.off()
 
 ## setup predictor df for temporal smooths
 time.pred<-expand.grid(time=seq(min(df$time), max(df$time),length.out=100), 
@@ -95,4 +89,4 @@ observed<-df
 observed$species = 'Total'
 
 results<-list(time.pred, enso.pred, dmi.pred, month.pred, observed)
-save(results, mgam, file='data/results/cpue_gam_total.Rdata')
+save(results, mgam, file='results/cpue-gams/gam_total.Rdata')

@@ -1,38 +1,17 @@
 
 library(here)
-setwd(here('pirates/'))
-library(funk)
+setwd(here('tropical-catch-div/'))
 library(tidyverse)
 library(rethinking)
 
 
-load(file = 'results/portfolio/merged_predictor_master.Rdata')
-
-### define whether full dataset is used for div estimates, or reduced to 5 catches (sN = TRUE)
-# sn = TRUE
-# if(sn == TRUE){
-# 	response.pred$simpson.div<-response.pred$simpson.div_sN
-# 	response.pred$beta.bray<-response.pred$beta.bray_sN
-# 	response.pred$beta.jac<-response.pred$beta.jac_sN
-# }
-
-
-response.pred$depth<-NULL
-response.pred$simpson.div_sN<-NULL
-response.pred$richness_sN<-NULL
-response.pred$beta.bray_sN<-NULL
-response.pred$beta.jac_sN<-NULL
+load(file = 'data/focal_fleet.Rdata')
 
 ### model of annual mean CPUE, with SZ-level predictors
-
-head(response.pred)
+response.pred <- response.pred %>% select(cpue_pred, SZ, year, year.SZ,days, diesel_volume, boatpower, 
+	boatsize, fishing.area.km2, median.latitude, median.longitude, 
+	beta.bray, simpson.div )
 focal<-scaler(response.pred, ID = c('cpue_pred', 'SZ', 'year', 'year.SZ'), cats = FALSE)
-uniques(focal$SZ)
-
-cors<-focal %>% ungroup() %>% select(-SZ, -year.SZ, -year) %>% na.omit()
-pairs2(cors)
-dim(cors)
-
 
 ### Annual mean CPUE - does the strategy or capacity of fishing vessel affect catch?
 

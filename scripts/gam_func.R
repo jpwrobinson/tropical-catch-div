@@ -4,9 +4,6 @@ library(mgcv)
 library(gratia)
 library(itsadug)
 library(funk)
-library(ggplot2)
-
-theme_set(theme_sleek())
 
 gamit_SZ<-function(df, species, plot =F, save = F){
 
