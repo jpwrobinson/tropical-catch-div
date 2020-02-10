@@ -40,5 +40,5 @@ m.cpue <- map2stan(
 	    scale ~ dexp(2)
 ), data=focal, iter=3000, chains=3)
 
-save(df, focal, m.cpue, file='results/cpue_div_timeseries.Rdata')
+save(df, focal, m.cpue, file='results/bayesian/cpue_div_timeseries.Rdata')
 

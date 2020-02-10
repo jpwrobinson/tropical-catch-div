@@ -18,10 +18,10 @@ th<-theme(axis.text.y=element_text(size=12, colour='black'),
                 panel.border = element_rect(colour='black'),
                 plot.margin = unit(c(5.5, 2.5, 0, 1.5), "pt"))
 
-obs<- read.csv('data/scaled_revenue_dataset.csv')
+obs<- read.csv('data/revenue_scaled.csv')
 
 ## read data
-focal <- read.csv('data/scaled_revenue_dataset.csv') %>% 
+focal <- read.csv('data/revenue_scaled.csv') %>% 
   arrange(SZ, year) %>% 
   mutate(yrID = as.numeric(as.factor(year)),
          szID = as.numeric(as.factor(SZ))) %>% 

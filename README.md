@@ -1,36 +1,35 @@
 # tropical-ssf-div
-This repository contains R code for the GAM and Bayesian models accompanying  Robinson, Robinson, Gerry, Govinden, Freshwater and Graham, **Diversification insulates fisher catch and revenue in heavily exploited tropical fisheries. (2020) *Science Advances.***
+This repository contains R code for the GAM and Bayesian models constructed in  Robinson, Robinson, Gerry, Govinden, Freshwater and Graham, **Diversification insulates fisher catch and revenue in heavily exploited tropical fisheries. (2020) *Science Advances.***
 
 
 The following R packages were used to analyse data:
 
 ```
-install.packages(c("tidyverse", "rethinking", "here", "mgcv", "itsadug", "gratia"))
+install.packages(c("tidyverse", "rethinking", "here", "mgcv", "itsadug", "gratia", 'rstan', 'tidybayes'))
 ```
 
 as well as a personal package with a function for centering and standardizing covariates ([github.com/jpwrobinson/funk](https://github.com/jpwrobinson/funk)).
 
 **data**
 
-* `cpue_1990-2016_total.Rdata`
-* `focal_fleet.Rdata`
-* `cpue_species_1990-2016.Rdata`
-* `scaled_revenue_dataset.csv`
-* `diversity_fulldataset.Rdata`
+* `cpue_1990-2016_total`: total CPUE for full fleet, 1990-2016
+* `focal_fleet`: catch and effort for focal fleet, 2006-2016
+* `cpue_species_1990-2016`: CPUE estimates by species group for full fleet, 1990-2016
+* `revenue_scaled`: revenue estimates (total, perday, perday_perkg) with catch diversity for focal fleet
+* `diversity_fulldataset`: catch diversity estimates for full fleet, 1990-2016
 
 **scripts**
 
-* `01_cpue_gams.R`
-* `02_focal_catch_mod.R`	
-* `03_catch_div_allboats.R`
-* `04_fitRevenueModels.R`
-* `gam_func.R`
-* `varyIntSlope_studT_rand.stan`
-* `varyIntSlope_studT_rand.rds`
+* `01_cpue_gams.R`: GAM models to fit temporal CPUE trends
+* `02_focal_catch_mod.R`: Predictors of CPUE for focal fleet
+* `03_catch_div_allboats.R`: Temporal CPUE trends by low/high catch diversity
+* `04_fitRevenueModels.R`: Fitting revenue models
+* `gam_func.R`: generalized function for fitting GAMs to CPUE data
+* `varyIntSlope_studT_rand.stan`: Stan model structure for revenue patterns
 
 **results/cpue-gam**
 
-*General additive models underlying CPUE trends from 1990-2016*
+*General additive models underlying CPUE trends from 1990-2016. Rdata files contain GAM model structures and fitted datasets*. 
 
 * `gam_caranxsp.Rdata`
 * `gam_grouper.Rdata`
@@ -41,13 +40,14 @@ as well as a personal package with a function for centering and standardizing co
 * `gam_redsnapper.Rdata`
 * `gam_sharks.Rdata`
 * `gam_sphyraenidsp.Rdata`
-* ``gam_total.Rdata`
+* `gam_total.Rdata`
 
 **results/bayesian**
 
-*Bayesian models underlying diversification effects*
+*Bayesian models underlying diversification effects. Rdata/rds contain model structures fit in rethinking and rstan packages.*
 
-* `revDay_parEstMCMC.rds`
-* `revDayKg_parEstMCMC.rds`
-* 
+* `cpue_sz_model.Rdata`: focal fleet, catch predictors
+* `cpue_div_timeseries.Rdata`: full fleet, CPUE trends by catch diversity
+* `revDay_parEstMCMC.rds`: focal fleet, revenue per day
+* `revDayKg_parEstMCMC.rds`: focal fleet, revenue per day per kg
 

@@ -37,30 +37,10 @@ m.cpue <- map2stan(
 	    scale ~ dexp(2)
 ), data=focal, iter=3000, chains=3)
 
-# m.cpue <- map2stan(
-# 	alist(
-# 	    cpue_diff ~ dnorm( mu , sigma ) ,
-# 	    mu <- a + ar[SZ] + ar2[year] + 
-# 	    			   bA*days + 
-# 	    			   bB*diesel +
-# 	    			   bC*boatpower +
-# 	    			   bD*boatsize +
-# 	    			   bE*fishing.area.km2 +
-# 	    			   bF*median.latitude + 
-# 	    			   bG*median.longitude +
-# 	    			   bH*beta.bray +
-# 	    			   bI*simpson.div,
-# 	    a ~ dnorm(0, 10),
-# 	    c(ar)[SZ] ~  dnorm(0,sigmar1), 
-# 	    c(ar2)[year] ~  dnorm(0,sigmar2),
-# 	   c(bA, bB, bC, bD, bE, bF, bG, bH, bI) ~ dnorm(0, 10),
-# 	    c(sigma, sigmar1, sigmar2) ~ dcauchy( 0 , 2)
-# ), data=focal, iter=3000, chains=3)
-
 precis(m.cpue)
-# postcheck(m.cpue)
-
-uniques(focal$SZ)
+postcheck(m.cpue)
 
 
-save(m.cpue, focal, response.pred, file = 'results/catch-drivers/cpue_sz_model.Rdata')
+
+
+save(m.cpue, focal, response.pred, file = 'results/bayesian/cpue_sz_model.Rdata')
