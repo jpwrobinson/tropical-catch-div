@@ -1,6 +1,8 @@
 # tropical-ssf-div
 This repository contains R code for the GAM and Bayesian models constructed in  Robinson, Robinson, Gerry, Govinden, Freshwater and Graham, **Diversification insulates fisher catch and revenue in heavily exploited tropical fisheries. (2020) *Science Advances.***
 
+[https://advances.sciencemag.org/content/6/8/eaaz0587](https://advances.sciencemag.org/content/6/8/eaaz0587)
+
 
 The following R packages were used to analyse data:
 
